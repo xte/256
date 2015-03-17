@@ -1,0 +1,67 @@
+body {
+  background-color: #8e94ac;
+  font-family: Arial, sans-serif;
+}
+
+#game-container {
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.row {
+    display: block;
+    margin: 0 auto;
+    width: 30%;
+}
+
+.cell {
+  font-size: 30px;
+  text-align: center;
+  border: 1px solid;
+  padding: 19px;
+  height: 30px;
+  width: 30px;
+  border-radius: 8px;
+  margin: 2px;
+  top: 50%;
+  display: inline-block;
+}
+
+
+
+.val0 {
+  background-color: #f9fafe;
+}
+
+.val2 {
+  background-color: #f4f6fd;
+}
+
+.val4 {
+  background-color: #eff2fc;
+}
+
+.val8 {
+  background-color: #eaedfb;
+}
+
+
+.val16 {
+  background-color: #e5e9fa;
+}
+
+.val32 {
+  background-color: #dfe5f9;
+}
+
+.val64 {
+  background-color: #dae0f8;
+}
+
+.val128 {
+  background-color: #d5dcf7;
+}
+
+.val256 {
+  background-color: #d0d8f6;
+}
