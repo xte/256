@@ -82,12 +82,24 @@ var Game = (function() {
 
   Game.prototype.randomSpawn = function() {
     var spawned = false;
+    // this gets into an infinite loop
     while(spawned === false) {
       var randomBoardSlot = getRandomInt(0,17);
       if( this.board[randomBoardSlot] === 0) {
         this.board[randomBoardSlot] = 2;
         spawned = true;
-      }
+      } else {
+        // check if the board is full (dumb way)
+        var full = true;
+        for(i = 0; i < 16; i ++) {
+          if(this.board[i] === 0) {
+            full = false;
+          }
+        }
+        if( full === true ) {
+          spawned = true;
+        }
+      } // end else
     }
   }
 
@@ -97,6 +109,10 @@ var Game = (function() {
       case 'left':
         var mappedRows = self.getRows().map(function(row, index, board) {
           var filteredRow = row.filter(removeZeros);
+          // user hits left, we start on the first column and iterate right
+          // user hits right, we should start on the last (right-most) column and iterate left
+          // user hits down, we should start on the last (bottom) row and iterate up
+          // user hits up, we should start on the first (top) row and iterate down
           if(filteredRow.length > 1) {
             for(i = 0; i < filteredRow.length-1; i++){
               if(filteredRow[i] === filteredRow[i+1]){
@@ -116,19 +132,19 @@ var Game = (function() {
         break;
       case 'right':
        var mappedRows = self.getRows().map(function(row, index, board) {
-          var filteredRow = row.filter(removeZeros);
+          var filteredRow = row.filter(removeZeros).reverse();
           if(filteredRow.length > 1) {
             for(i = 0; i < filteredRow.length-1; i++){
               if(filteredRow[i] === filteredRow[i+1]){
                 filteredRow.splice(i, 2, (filteredRow[i] * 2));
-                filteredRow.unshift(0);
+                filteredRow.push(0);
               }
             }
           }
           while(filteredRow.length < 4) {
-            filteredRow.unshift(0);
+            filteredRow.push(0);
           }
-          return filteredRow;
+          return filteredRow.reverse();
         });
         self.setRows(mappedRows);
         self.randomSpawn();
@@ -156,19 +172,19 @@ var Game = (function() {
         break;
       case 'down':
         var mappedCols = self.getCols().map(function(col, index, board) {
-          var filteredCol = col.filter(removeZeros);
+          var filteredCol = col.filter(removeZeros).reverse();
           if(filteredCol.length > 1) {
             for(i = 0; i < filteredCol.length-1; i++){
               if(filteredCol[i] === filteredCol[i+1]){
                 filteredCol.splice(i, 2, (filteredCol[i] * 2));
-                filteredCol.unshift(0);
+                filteredCol.push(0);
               }
             }
           }
           while(filteredCol.length < 4) {
-            filteredCol.unshift(0);
+            filteredCol.push(0);
           }
-          return filteredCol;
+          return filteredCol.reverse();
         });
         self.setCols(mappedCols);
         self.randomSpawn();
